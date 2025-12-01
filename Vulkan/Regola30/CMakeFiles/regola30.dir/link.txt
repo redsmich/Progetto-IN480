@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/regola30.dir/link.d CMakeFiles/regola30.dir/main.cpp.o -o regola30  -Wl,-rpath,/home/rosmai/1.3.268.0/x86_64/lib /home/rosmai/1.3.268.0/x86_64/lib/libvulkan.so

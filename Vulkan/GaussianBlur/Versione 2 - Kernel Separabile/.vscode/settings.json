@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "ostream": "cpp",
+        "gaussian_blur": "cpp",
+        "cmath": "cpp",
+        "stdexcept": "cpp",
+        "iostream": "cpp",
+        "e3_2": "c"
+    }
+}

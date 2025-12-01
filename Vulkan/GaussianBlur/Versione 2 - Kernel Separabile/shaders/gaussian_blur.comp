@@ -1,0 +1,77 @@
+#version 450
+layout(local_size_x = 16, local_size_y = 16) in;
+
+// Binding 0: immagine da leggere 
+layout(std430, binding = 0) readonly buffer InputImage { uint data[]; } inputImage;
+// Binding 1: immagine su cui scrivere
+layout(std430, binding = 1) writeonly buffer OutputImage { uint data[]; } outputImage;
+// Binding 2: Kernel
+layout(std430, binding = 2) readonly buffer KernelBuffer { float kernel[]; };
+
+layout(push_constant) uniform PushConsts {
+    int width;
+    int height;
+    int kerDim;
+    int directionX; // 1 se orizzontale, 0 se verticale
+    int directionY; // 0 se orizzontale, 1 se verticale
+} pushConsts;
+
+vec4 unpackRGBA(uint pixel) {
+    return vec4(
+        float((pixel >> 0)  & 0xFFu) / 255.0,
+        float((pixel >> 8)  & 0xFFu) / 255.0,
+        float((pixel >> 16) & 0xFFu) / 255.0,
+        float((pixel >> 24) & 0xFFu) / 255.0
+    );
+}
+
+uint packRGBA(vec4 color) {
+    return (uint(clamp(color.r, 0.0, 1.0) * 255.0) << 0)  |
+           (uint(clamp(color.g, 0.0, 1.0) * 255.0) << 8)  |
+           (uint(clamp(color.b, 0.0, 1.0) * 255.0) << 16) |
+           (uint(clamp(color.a, 0.0, 1.0) * 255.0) << 24);
+}
+
+/*int wrap(int coord, int maxVal) {
+    int modCoord = coord % maxVal;
+
+    if (modCoord < 0){
+        return modCoord + maxVal;
+    }
+
+    else{
+        return modCoord;
+        }
+}
+*/
+
+int clampCoord(int coord, int maxVal) {
+    return clamp(coord, 0, maxVal - 1);
+}
+
+void main() {
+    ivec2 gid = ivec2(gl_GlobalInvocationID.xy);
+    if (gid.x >= pushConsts.width || gid.y >= pushConsts.height) return;
+    
+    int idx = gid.y * pushConsts.width + gid.x;
+    vec4 color = vec4(0.0);
+    int radius = (pushConsts.kerDim - 1) / 2;
+    
+    for (int i = -radius; i <= radius; i++) {
+        int nx = gid.x + (i * pushConsts.directionX);
+        int ny = gid.y + (i * pushConsts.directionY);
+        
+        nx = clampCoord(nx, pushConsts.width);
+        ny = clampCoord(ny, pushConsts.height);
+        
+        int nidx = ny * pushConsts.width + nx;
+        
+        float coeff = kernel[i + radius];
+        
+        color += unpackRGBA(inputImage.data[nidx]) * coeff;
+    }
+
+    //forziamo l'alpha ad essere totalmente opaca
+    color.a = 1.0;
+    outputImage.data[idx] = packRGBA(color);
+}
