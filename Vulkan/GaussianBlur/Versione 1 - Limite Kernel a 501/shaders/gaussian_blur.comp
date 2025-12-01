@@ -1,0 +1,77 @@
+#version 450
+layout(local_size_x = 16, local_size_y = 16) in;
+
+// Binding 0: Immagine di input (sola lettura)
+layout(std430, binding = 0) readonly buffer InputImage { 
+    uint data[]; 
+} inputImage;
+
+// Binding 1: Immagine di output (sola scrittura)
+layout(std430, binding = 1) writeonly buffer OutputImage { 
+    uint data[]; 
+} outputImage;
+
+// Binding 2: Kernel Gaussiano (sola lettura)
+layout(std430, binding = 2) readonly buffer KernelBuffer { 
+    float kernel[]; 
+};
+
+// Push Constants: Devono corrispondere alla struct BlurInfo nel C++
+layout(push_constant) uniform PushConsts {
+    int width;
+    int height;
+    int kerDim;
+} pushConsts;
+
+// Funzione per spacchettare un uint (RGBA8) in vec4 (0.0 - 1.0)
+vec4 unpackRGBA(uint pixel) {
+    return vec4(
+        float((pixel >> 0)  & 0xFFu) / 255.0,
+        float((pixel >> 8)  & 0xFFu) / 255.0,
+        float((pixel >> 16) & 0xFFu) / 255.0,
+        float((pixel >> 24) & 0xFFu) / 255.0
+    );
+}
+
+// Funzione per impacchettare un vec4 in uint (RGBA8)
+uint packRGBA(vec4 color) {
+    return (uint(clamp(color.r, 0.0, 1.0) * 255.0) << 0)  |
+           (uint(clamp(color.g, 0.0, 1.0) * 255.0) << 8)  |
+           (uint(clamp(color.b, 0.0, 1.0) * 255.0) << 16) |
+           (uint(clamp(color.a, 0.0, 1.0) * 255.0) << 24);
+}
+
+// Funzione per gestire i bordi (Clamp to Edge)
+int clampCoord(int coord, int maxVal) {
+    return clamp(coord, 0, maxVal - 1);
+}
+
+void main() {
+    ivec2 gid = ivec2(gl_GlobalInvocationID.xy);
+
+    // Controllo limiti immagine
+    if (gid.x >= pushConsts.width || gid.y >= pushConsts.height) return;
+
+    int idx = gid.y * pushConsts.width + gid.x;
+
+    vec4 color = vec4(0.0);
+    int radius = (pushConsts.kerDim - 1) / 2;
+    
+    // Convoluzione
+    for (int i = -radius; i <= radius; i++) {
+        for (int j = -radius; j <= radius; j++) {
+            // Calcolo coordinate vicini con clamp
+            int nj = clampCoord(gid.x + j, pushConsts.width);
+            int ni = clampCoord(gid.y + i, pushConsts.height);
+            
+            int nidx = ni * pushConsts.width + nj;
+            
+            // Lettura kernel: il kernel è linearizzato nel buffer
+            float coeff = kernel[(i + radius) * pushConsts.kerDim + (j + radius)];
+
+            color += unpackRGBA(inputImage.data[nidx]) * coeff;
+        }
+    }
+
+    outputImage.data[idx] = packRGBA(color);
+}
