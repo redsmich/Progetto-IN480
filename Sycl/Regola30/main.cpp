@@ -166,7 +166,7 @@ queue choose_and_printDevices(bool useCpu, bool print) {
     if (print){
         std::cout << "\n=== Dispositivi SYCL disponibili ===\n";
 
-        //scorri tutte le piattaforme (es. Intel, NVIDIA, CPU host, ecc.)
+        //scorri tutte le piattaforme
         int deviceIndex = 0;
         for (const auto &plat : platform::get_platforms()) {
             std::cout << "Piattaforma: " << plat.get_info<info::platform::name>() << "\n";
