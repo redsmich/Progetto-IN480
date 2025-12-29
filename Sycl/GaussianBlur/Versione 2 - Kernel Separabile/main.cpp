@@ -191,13 +191,13 @@ int main() {
 
     q.wait();
 
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = end - start;
+
     host_accessor host_out(buf_out, read_only);
     for (int i = 0; i < width * height * channels; i++) {
         output[i] = host_out[i];
     }
-
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> elapsed = end - start;
 
     std::vector<unsigned char> out_img(width * height * channels);
     for (int i = 0; i < width * height * channels; i++) {

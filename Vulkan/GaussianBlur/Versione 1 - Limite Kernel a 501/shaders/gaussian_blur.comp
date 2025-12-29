@@ -7,66 +7,66 @@ layout(std430, binding = 2) readonly buffer KernelBuffer { float kernel[]; };
 
 
 layout(push_constant) uniform PushConsts {
-    int width;
-    int height;
-    int kerDim;
+    int width;
+    int height;
+    int kerDim;
 } pushConsts;
 
 vec4 unpackRGBA(uint pixel) {
-    return vec4(
-        float((pixel >> 0)  & 0xFFu) / 255.0,
-        float((pixel >> 8)  & 0xFFu) / 255.0,
-        float((pixel >> 16) & 0xFFu) / 255.0,
-        float((pixel >> 24) & 0xFFu) / 255.0
-    );
+    return vec4(
+        float((pixel >> 0)  & 0xFFu) / 255.0,
+        float((pixel >> 8)  & 0xFFu) / 255.0,
+        float((pixel >> 16) & 0xFFu) / 255.0,
+        float((pixel >> 24) & 0xFFu) / 255.0
+    );
 }
 
 uint packRGBA(vec4 color) {
-    return (uint(color.r * 255.0) << 0)  |
-           (uint(color.g * 255.0) << 8)  |
-           (uint(color.b * 255.0) << 16) |
-           (uint(color.a * 255.0) << 24);
+    return (uint(color.r * 255.0) << 0)  |
+           (uint(color.g * 255.0) << 8)  |
+           (uint(color.b * 255.0) << 16) |
+           (uint(color.a * 255.0) << 24);
 }
 
 /*int wrap(int coord, int maxVal) {
-    int modCoord = coord % maxVal;
+    int modCoord = coord % maxVal;
 
-    if (modCoord < 0){
-        return modCoord + maxVal;
-    }
+    if (modCoord < 0){
+        return modCoord + maxVal;
+    }
 
-    else{
-        return modCoord;
-        }
+    else{
+        return modCoord;
+        }
 }
 */
 
 int clampCoord(int coord, int maxVal) {
-    return clamp(coord, 0, maxVal - 1);
+    return clamp(coord, 0, maxVal - 1);
 }
 
 
 
 void main() {
-    ivec2 gid = ivec2(gl_GlobalInvocationID.xy);
-    if (gid.x >= pushConsts.width || gid.y >= pushConsts.height) return;
-    int idx = gid.y * pushConsts.width + gid.x;
+    ivec2 gid = ivec2(gl_GlobalInvocationID.xy);
+    if (gid.x >= pushConsts.width || gid.y >= pushConsts.height) return;
+    int idx = gid.y * pushConsts.width + gid.x;
 
-    vec4 color = vec4(0.0);
-    int radius = (pushConsts.kerDim-1)/2;
-    
+    vec4 color = vec4(0.0);
+    int radius = (pushConsts.kerDim-1)/2;
+    
 
-    for (int i = -radius; i <= radius; i++) {
-        for (int j = -radius; j <= radius; j++) {
-            int nj = clampCoord(gid.x + j, pushConsts.width);
-            int ni = clampCoord(gid.y + i, pushConsts.height);
-            int nidx = ni * pushConsts.width + nj;
-            float coeff = kernel[(i + radius) * pushConsts.kerDim + (j + radius)];
+    for (int i = -radius; i <= radius; i++) {
+        for (int j = -radius; j <= radius; j++) {
+            int nj = clampCoord(gid.x + j, pushConsts.width);
+            int ni = clampCoord(gid.y + i, pushConsts.height);
+            int nidx = ni * pushConsts.width + nj;
+            float coeff = kernel[(i + radius) * pushConsts.kerDim + (j + radius)];
 
-            color = color + unpackRGBA(inputImage.data[nidx]) * coeff;
-        }
-    }
+            color = color + unpackRGBA(inputImage.data[nidx]) * coeff;
+        }
+    }
 
     color.a = 1.0;
-    outputImage.data[idx] = packRGBA(color);
+    outputImage.data[idx] = packRGBA(color);
 }

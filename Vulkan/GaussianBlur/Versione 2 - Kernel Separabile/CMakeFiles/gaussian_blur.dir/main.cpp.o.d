@@ -1,7 +1,7 @@
 CMakeFiles/gaussian_blur.dir/main.cpp.o: \
- /home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlur/main.cpp \
+ /home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlurSeparabile/main.cpp \
  /usr/include/stdc-predef.h \
- /home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlur/include/stb_image.h \
+ /home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlurSeparabile/include/stb_image.h \
  /usr/include/stdio.h /usr/include/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
  /usr/include/bits/wordsize.h /usr/include/bits/timesize.h \
@@ -90,7 +90,7 @@ CMakeFiles/gaussian_blur.dir/main.cpp.o: \
  /usr/lib/gcc/x86_64-redhat-linux/15/include/xmmintrin.h \
  /usr/lib/gcc/x86_64-redhat-linux/15/include/mmintrin.h \
  /usr/lib/gcc/x86_64-redhat-linux/15/include/mm_malloc.h \
- /home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlur/include/stb_image_write.h \
+ /home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlurSeparabile/include/stb_image_write.h \
  /home/rosmai/1.3.268.0/x86_64/include/vulkan/vulkan.h \
  /home/rosmai/1.3.268.0/x86_64/include/vulkan/vk_platform.h \
  /home/rosmai/1.3.268.0/x86_64/include/vulkan/vulkan_core.h \

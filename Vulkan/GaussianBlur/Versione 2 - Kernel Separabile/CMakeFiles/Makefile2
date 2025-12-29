@@ -54,10 +54,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlur
+CMAKE_SOURCE_DIR = /home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlurSeparabile
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlur
+CMAKE_BINARY_DIR = /home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlurSeparabile
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -85,14 +85,14 @@ clean: CMakeFiles/gaussian_blur.dir/clean
 CMakeFiles/gaussian_blur.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gaussian_blur.dir/build.make CMakeFiles/gaussian_blur.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gaussian_blur.dir/build.make CMakeFiles/gaussian_blur.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlur/CMakeFiles --progress-num=1,2 "Built target gaussian_blur"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlurSeparabile/CMakeFiles --progress-num=1,2 "Built target gaussian_blur"
 .PHONY : CMakeFiles/gaussian_blur.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/gaussian_blur.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlur/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlurSeparabile/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/gaussian_blur.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlur/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlurSeparabile/CMakeFiles 0
 .PHONY : CMakeFiles/gaussian_blur.dir/rule
 
 # Convenience name for target.
@@ -102,7 +102,7 @@ gaussian_blur: CMakeFiles/gaussian_blur.dir/rule
 # codegen rule for target.
 CMakeFiles/gaussian_blur.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gaussian_blur.dir/build.make CMakeFiles/gaussian_blur.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlur/CMakeFiles --progress-num=1,2 "Finished codegen for target gaussian_blur"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlurSeparabile/CMakeFiles --progress-num=1,2 "Finished codegen for target gaussian_blur"
 .PHONY : CMakeFiles/gaussian_blur.dir/codegen
 
 # clean rule for target.

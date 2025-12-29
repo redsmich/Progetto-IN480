@@ -10,8 +10,9 @@ CMakeFiles/gaussian_blur.dir/main.cpp.o: main.cpp \
   /home/rosmai/1.3.268.0/x86_64/include/vulkan/vk_platform.h \
   /home/rosmai/1.3.268.0/x86_64/include/vulkan/vulkan.h \
   /home/rosmai/1.3.268.0/x86_64/include/vulkan/vulkan_core.h \
-  include/stb_image.h \
-  include/stb_image_write.h \
+  /home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlur/include/stb_image.h \
+  /home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlur/include/stb_image_write.h \
+  /home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlur/main.cpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -442,19 +443,19 @@ CMakeFiles/gaussian_blur.dir/main.cpp.o:
 
 /usr/include/c++/15/bits/stl_uninitialized.h:
 
-/usr/lib64/crtn.o:
-
-/usr/include/c++/15/bits/ios_base.h:
-
 /usr/include/c++/15/bits/alloc_traits.h:
 
 /usr/include/bits/types/locale_t.h:
 
+/usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h:
+
+/usr/include/linux/stddef.h:
+
+/usr/include/c++/15/bits/locale_classes.h:
+
 /usr/include/bits/types/__locale_t.h:
 
 /usr/include/bits/types/__fpos64_t.h:
-
-/usr/include/bits/flt-eval-method.h:
 
 /usr/include/bits/types.h:
 
@@ -472,7 +473,11 @@ CMakeFiles/gaussian_blur.dir/main.cpp.o:
 
 /usr/include/bits/stdlib-float.h:
 
+/usr/include/bits/thread-shared-types.h:
+
 /usr/include/bits/struct_mutex.h:
+
+/usr/include/c++/15/x86_64-redhat-linux/bits/atomic_word.h:
 
 /usr/include/bits/uintn-identity.h:
 
@@ -496,6 +501,8 @@ CMakeFiles/gaussian_blur.dir/main.cpp.o:
 
 /usr/include/bits/types/__mbstate_t.h:
 
+/home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlur/main.cpp:
+
 /usr/include/bits/stdio_lim.h:
 
 /usr/include/c++/15/x86_64-redhat-linux/bits/ctype_inline.h:
@@ -514,11 +521,23 @@ CMakeFiles/gaussian_blur.dir/main.cpp.o:
 
 /usr/include/asm/posix_types_64.h:
 
+/usr/include/bits/types/__sigset_t.h:
+
+/usr/include/c++/15/bit:
+
+/usr/include/c++/15/bits/allocator.h:
+
+/usr/include/asm-generic/posix_types.h:
+
+/usr/include/asm-generic/errno.h:
+
+/usr/include/bits/fp-logb.h:
+
+/usr/include/asm-generic/errno-base.h:
+
 /usr/include/asm-generic/bitsperlong.h:
 
 /usr/include/asm-generic/types.h:
-
-/usr/include/asm-generic/errno-base.h:
 
 /usr/include/c++/15/math.h:
 
@@ -534,25 +553,65 @@ CMakeFiles/gaussian_blur.dir/main.cpp.o:
 
 /usr/include/c++/15/tr1/poly_laguerre.tcc:
 
-/usr/include/c++/15/bit:
+/usr/lib/gcc/x86_64-redhat-linux/15/include/xmmintrin.h:
 
-/usr/include/c++/15/bits/allocator.h:
+/home/rosmai/1.3.268.0/x86_64/include/vulkan/vulkan_core.h:
 
-/usr/include/asm-generic/posix_types.h:
+/usr/include/c++/15/bits/utility.h:
 
-/usr/include/bits/thread-shared-types.h:
+/usr/include/c++/15/tr1/poly_hermite.tcc:
 
-include/stb_image_write.h:
+/home/rosmai/1.3.268.0/x86_64/include/vk_video/vulkan_video_codec_h264std.h:
+
+/usr/include/bits/types/time_t.h:
+
+/usr/include/c++/15/bits/ostream_insert.h:
+
+/usr/include/bits/types/error_t.h:
+
+/usr/include/bits/long-double.h:
+
+/usr/include/bits/types/struct_itimerspec.h:
+
+/usr/include/bits/flt-eval-method.h:
+
+/usr/include/bits/posix2_lim.h:
+
+/usr/include/asm/posix_types.h:
+
+/usr/include/bits/time.h:
+
+main.cpp:
+
+/usr/include/c++/15/x86_64-redhat-linux/bits/c++io.h:
+
+/usr/include/asm/types.h:
+
+/usr/include/c++/15/tr1/gamma.tcc:
+
+/usr/include/c++/15/bits/chrono.h:
+
+/usr/include/c++/15/x86_64-redhat-linux/bits/cpu_defines.h:
+
+/usr/include/bits/types/wint_t.h:
+
+/usr/include/c++/15/bits/locale_facets.h:
+
+/usr/include/c++/15/bits/requires_hosted.h:
+
+/usr/include/c++/15/cstdlib:
+
+/usr/include/alloca.h:
+
+/usr/include/bits/stdint-least.h:
+
+/usr/include/c++/15/bits/move.h:
 
 /usr/include/bits/pthreadtypes-arch.h:
 
 /usr/include/gnu/stubs.h:
 
-/usr/include/asm-generic/errno.h:
-
-/usr/include/bits/fp-logb.h:
-
-/usr/include/c++/15/x86_64-redhat-linux/bits/c++io.h:
+/usr/include/bits/endianness.h:
 
 /usr/include/bits/libm-simd-decl-stubs.h:
 
@@ -561,48 +620,6 @@ include/stb_image_write.h:
 /usr/include/assert.h:
 
 /usr/include/c++/15/fstream:
-
-/usr/include/c++/15/tr1/poly_hermite.tcc:
-
-/home/rosmai/1.3.268.0/x86_64/include/vk_video/vulkan_video_codec_h264std.h:
-
-/usr/include/bits/types/time_t.h:
-
-/usr/include/bits/endianness.h:
-
-/usr/include/c++/15/bits/ostream_insert.h:
-
-/usr/include/bits/types/error_t.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/include/xmmintrin.h:
-
-/home/rosmai/1.3.268.0/x86_64/include/vulkan/vulkan_core.h:
-
-/usr/include/c++/15/bits/utility.h:
-
-/usr/include/bits/long-double.h:
-
-/usr/include/bits/types/struct_itimerspec.h:
-
-/usr/include/asm/posix_types.h:
-
-/usr/include/bits/time.h:
-
-main.cpp:
-
-/usr/include/bits/posix2_lim.h:
-
-/usr/include/bits/types/__sigset_t.h:
-
-include/stb_image.h:
-
-/usr/include/asm/types.h:
-
-/usr/include/alloca.h:
-
-/usr/include/bits/stdint-least.h:
-
-/usr/include/c++/15/bits/move.h:
 
 /usr/include/c++/15/bits/exception_ptr.h:
 
@@ -642,6 +659,8 @@ include/stb_image.h:
 
 /usr/include/bits/mathcalls-helper-functions.h:
 
+/home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlur/include/stb_image.h:
+
 /usr/include/c++/15/bits/stl_function.h:
 
 /usr/include/c++/15/cwchar:
@@ -670,6 +689,12 @@ include/stb_image.h:
 
 /usr/include/bits/stdint-uintn.h:
 
+/usr/include/bits/types/__FILE.h:
+
+/usr/include/features.h:
+
+/usr/include/bits/sched.h:
+
 /usr/include/bits/types/timer_t.h:
 
 /usr/include/c++/15/bits/stl_heap.h:
@@ -694,23 +719,11 @@ include/stb_image.h:
 
 /usr/include/bits/types/struct_timeval.h:
 
-/usr/include/features.h:
+/usr/lib64/crtn.o:
 
-/usr/include/bits/sched.h:
-
-/usr/include/bits/types/__FILE.h:
-
-/usr/include/c++/15/x86_64-redhat-linux/bits/atomic_word.h:
+/usr/include/c++/15/bits/ios_base.h:
 
 /usr/include/c++/15/bits/istream.tcc:
-
-/usr/include/bits/types/wint_t.h:
-
-/usr/include/c++/15/bits/locale_facets.h:
-
-/usr/include/c++/15/bits/requires_hosted.h:
-
-/usr/include/c++/15/cstdlib:
 
 /usr/include/c++/15/bits/memory_resource.h:
 
@@ -800,6 +813,8 @@ include/stb_image.h:
 
 /usr/include/c++/15/bits/uses_allocator_args.h:
 
+/home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlur/include/stb_image_write.h:
+
 /usr/include/c++/15/iostream:
 
 /usr/include/c++/15/bits/vector.tcc:
@@ -880,12 +895,6 @@ include/stb_image.h:
 
 /usr/include/c++/15/tr1/ell_integral.tcc:
 
-/usr/include/c++/15/tr1/gamma.tcc:
-
-/usr/include/c++/15/bits/chrono.h:
-
-/usr/include/c++/15/x86_64-redhat-linux/bits/cpu_defines.h:
-
 /usr/include/bits/mathcalls-macros.h:
 
 /usr/include/c++/15/tr1/hypergeometric.tcc:
@@ -909,9 +918,3 @@ include/stb_image.h:
 /usr/include/bits/types/FILE.h:
 
 /usr/include/linux/posix_types.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h:
-
-/usr/include/c++/15/bits/locale_classes.h:
-
-/usr/include/linux/stddef.h:

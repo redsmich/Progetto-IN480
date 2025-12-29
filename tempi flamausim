@@ -1,0 +1,47 @@
+GB NORMALE
+VULKAN
+flamausim
+101
+pappagallo: 0,6859828
+pappagallone: 2,867198
+201
+pappagallo: 2,571952
+pappagallone: 10,67086
+
+GB CON CHUNK
+SYCL
+flamausim
+101
+pappagallo: 1,95106
+pappagallone: 6,214022
+201
+pappagallo: 15,30414
+pappagallone: 35,78628
+
+VULKAN
+flamausim
+101
+pappagallo: 0,672332
+pappagallone: 2,929724
+201
+pappagallo: 2,595356
+pappagallone: 10,69992
+
+GB SEPARABILE
+SYCL
+flamausim
+101
+pappagallo: 0,6354498
+pappagallone: 1,9744942
+201
+pappagallo: 0,6438218
+pappagallone: 2,127298
+
+VULKAN
+flamausim
+101
+pappagallo: 0,1429878
+pappagallone: 0,7041992
+201
+pappagallo: 0,1389794
+pappagallone: 0,7311748

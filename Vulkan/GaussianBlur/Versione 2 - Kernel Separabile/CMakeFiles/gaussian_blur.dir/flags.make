@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/rosmai/1.3.268.0/x86_64/include -I/home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlur/include
+CXX_INCLUDES = -I/home/rosmai/1.3.268.0/x86_64/include -I/home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlurSeparabile/include
 
 CXX_FLAGS = -std=gnu++17
 

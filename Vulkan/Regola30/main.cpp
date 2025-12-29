@@ -11,6 +11,7 @@
 #include <chrono>
 #include <cmath>
 
+
 using namespace std;
 
 struct PushConsts {
@@ -36,8 +37,8 @@ vector<char> loadShader(const string& filename) {
 }
 
 void input(int &width, int &height, bool &useCpu) {
-    tmp1 = 1024;
-    tmp2 = 512;
+    int tmp1 = 1024;
+    int tmp2 = 512;
     cout << "Inserire la dimensione dell'automa: [Premere 0 per il valore di default: " << width << "]: ";
     cin >> tmp1;
 
@@ -45,11 +46,12 @@ void input(int &width, int &height, bool &useCpu) {
     width = tmp1;
 
     int defaultHeight = width / 2;
-    cout << "Inserire il numero di iterazioni [Premere 0 per il valore di default: " << height << "]: ";
+    cout << "Inserire il numero di iterazioni [Premere 0 per il valore di default: " << defaultHeight << "]: ";
     cin >> tmp2;
 
+    height = defaultHeight;
     if (tmp2 != 0)
-    height = tmp;
+    height = tmp2;
 
     cout << "Vuoi  eseguire il codice su GPU o CPU (GPU = 0, CPU = 1): ";
     cin >> useCpu;
@@ -192,6 +194,7 @@ int main() {
     
     //creazione del buffer
     VkDeviceSize bufferSize = width * height * sizeof(uint32_t);
+    //VkDeviceSize bufferSize = static_cast<VkDeviceSize>(width) * height * sizeof(uint8_t);
     VkBufferCreateInfo bufferInfo{};
     bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
     bufferInfo.size = bufferSize;
@@ -454,7 +457,7 @@ int main() {
         }
         vkUnmapMemory(device, gridMemory);
 
-        stbi_write_png("output.png", width, height, 4, pngData.data(), width * 4);
+        stbi_write_png("images/output.png", width, height, 4, pngData.data(), width * 4);
         cout << "Immagine salvata come output.png\n";
     }
 

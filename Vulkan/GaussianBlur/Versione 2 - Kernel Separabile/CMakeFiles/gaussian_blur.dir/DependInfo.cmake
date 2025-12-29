@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlur/main.cpp" "CMakeFiles/gaussian_blur.dir/main.cpp.o" "gcc" "CMakeFiles/gaussian_blur.dir/main.cpp.o.d"
+  "/home/rosmai/ProgettoMaioneRossi/Vulkan/GaussianBlurSeparabile/main.cpp" "CMakeFiles/gaussian_blur.dir/main.cpp.o" "gcc" "CMakeFiles/gaussian_blur.dir/main.cpp.o.d"
   "" "gaussian_blur" "gcc" "CMakeFiles/gaussian_blur.dir/link.d"
   )
 

@@ -400,7 +400,7 @@ int main() {
     allocInfoDS.pSetLayouts = &descriptorSetLayout;
 
     VkDescriptorSet descriptorSet;
-    if (vkAllocateDescriptorSets(device, &allocInfoDS, descriptorSets.data()) != VK_SUCCESS) {
+    if (vkAllocateDescriptorSets(device, &allocInfoDS, &descriptorSet) != VK_SUCCESS) {
         throw runtime_error("Impossibile creare un descriptor set.");
     }
 
@@ -550,7 +550,7 @@ int main() {
         outImage[i * 4 + 3] = (outPacked[i] >> 24) & 0xFF;
     }
 
-    stbi_write_png("output.png", imgWidth, imgHeight, 4, outImage.data(), imgWidth * 4);
+    stbi_write_png("images/output.png", imgWidth, imgHeight, 4, outImage.data(), imgWidth * 4);
     vkUnmapMemory(device, outputMemory);
 
     //pulizia delle variabili 

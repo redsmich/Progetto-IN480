@@ -1,8 +1,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #define PI 3.141592653589793
-#include "stb_image.h"
-#include "stb_image_write.h"
+#include "include/stb_image.h"
+#include "include/stb_image_write.h"
 
 #include <vulkan/vulkan.h>
 #include <iostream>
@@ -572,7 +572,7 @@ int main() {
         outImage[i * 4 + 3] = (outPacked[i] >> 24) & 0xFF;
     }
 
-    stbi_write_png("output.png", imgWidth, imgHeight, 4, outImage.data(), imgWidth * 4);
+    stbi_write_png("images/output.png", imgWidth, imgHeight, 4, outImage.data(), imgWidth * 4);
     vkUnmapMemory(device, outputMemory);
 
     //pulizia delle variabili 

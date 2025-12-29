@@ -98,106 +98,106 @@ int main() {
     bool print = 0;
     int width, height, channels;
 
-    input(kerDim, pathName, useCpu);
+    input(kerDim, pathName, useCpu);
 
     //se il kernel è pari aggiungiamo uno per renderlo dispari
     if (kerDim % 2 == 0) kerDim++;
 
-    const char *path = pathName.c_str();
+    const char *path = pathName.c_str();
 
-    unsigned char* img = stbi_load(path, &width, &height, &channels, 0);
-    if (!img) {
-        throw std::runtime_error("Errore nel caricamento dell'immagine.");
-        return 1;
-    }
+    unsigned char* img = stbi_load(path, &width, &height, &channels, 0);
+    if (!img) {
+        throw std::runtime_error("Errore nel caricamento dell'immagine.");
+        return 1;
+    }
 
-    if (channels != 3 && channels != 4) {
-        throw std::runtime_error("L'immagine deve avere 3 (RGB) o 4 (RGBA) canali.");
-        stbi_image_free(img);
-        return 1;
-    }
+    if (channels != 3 && channels != 4) {
+        throw std::runtime_error("L'immagine deve avere 3 (RGB) o 4 (RGBA) canali.");
+        stbi_image_free(img);
+        return 1;
+    }
 
-    std::vector<float> inputVec(width * height * channels);
-    std::vector<float> outputVec(width * height * channels, 0.f); 
+    std::vector<float> input(width * height * channels);
+    std::vector<float> output(width * height * channels, 0.f); 
 
     for (int i = 0; i < width * height * channels; i++) {
-        inputVec[i] = static_cast<float>(img[i]) / 255.f;
+        input[i] = static_cast<float>(img[i]) / 255.f;
     }
     stbi_image_free(img);
 
-    queue q = choose_and_printDevices(useCpu);
+    queue q = choose_and_printDevices(useCpu, print);
     
     buffer<float, 1> buf_in(input.data(), range<1>(input.size()));
-    buffer<float, 1> buf_out(output.data(), range<1>(output.size()));
+    buffer<float, 1> buf_out(output.data(), range<1>(output.size()));
 
-    float sigma = static_cast<float>(kerDim) / 6.0f;
-    std::vector<float> gaussianKernel = createGaussianKernel(kerDim, sigma);
-    buffer<float, 1> buf_kernel(gaussianKernel.data(), range<1>(gaussianKernel.size()));
+    float sigma = static_cast<float>(kerDim) / 6.0f;
+    std::vector<float> gaussianKernel = createGaussianKernel(kerDim, sigma);
+    buffer<float, 1> buf_kernel(gaussianKernel.data(), range<1>(gaussianKernel.size()));
 
-    int radius = kerDim / 2;
+    int radius = kerDim / 2; 
+    auto start = std::chrono::high_resolution_clock::now();
 
-    auto start = std::chrono::high_resolution_clock::now();
+    q.submit([&](handler& h) {
+        accessor acc_in(buf_in, h, read_only);
+        accessor acc_out(buf_out, h, write_only, no_init);
+        accessor acc_kernel(buf_kernel, h, read_only);
 
-    q.submit([&](handler& h) {
-        accessor acc_in(buf_in, h, read_only);
-        accessor acc_out(buf_out, h, write_only, no_init);
-        accessor acc_kernel(buf_kernel, h, read_only);
+        h.parallel_for(range<2>(height, width), [=](id<2> idx) {
+        int y = idx[0];
+        int x = idx[1];
 
-        h.parallel_for(range<2>(height, width), [=](id<2> idx) {
-        int y = idx[0];
-        int x = idx[1];
+        /*auto wrap = [](int coord, int maxVal) -> int {
+            int modCoord = coord % maxVal;
+            return (modCoord < 0) ? modCoord + maxVal : modCoord;
+        };
 
-        /*auto wrap = [](int coord, int maxVal) -> int {
-            int modCoord = coord % maxVal;
-            return (modCoord < 0) ? modCoord + maxVal : modCoord;
-        };
+        auto clampCoord = [](int coord, int maxVal) -> int {
+        return sycl::clamp(coord, 0, maxVal - 1);
+        };*/
 
-        auto clampCoord = [](int coord, int maxVal) -> int {
-        return sycl::clamp(coord, 0, maxVal - 1);
-        };*/
+        for (int c = 0; c < channels; c++) {
+            float sum = 0.f;
 
-        for (int c = 0; c < channels; c++) {
-            float sum = 0.f;
+            for (int ky = -radius; ky <= radius; ky++) {
+                for (int kx = -radius; kx <= radius; kx++) {
+                    int ny = sycl::clamp(y + ky, 0, height - 1);
+                    int nx = sycl::clamp(x + kx, 0, width - 1);
+                    int idx_in = (ny * width + nx) * channels + c;
 
-            for (int ky = -radius; ky <= radius; ky++) {
-                for (int kx = -radius; kx <= radius; kx++) {
-                    int ny = sycl::clamp(y + ky, height);
-                    int nx = sycl::clamp(x + kx, width);
-                    int idx_in = (ny * width + nx) * channels + c;
+                    sum = sum + acc_in[idx_in] * acc_kernel[(ky + radius) * kerDim + (kx + radius)];
+                }
+            }
 
-                    sum = sum + acc_in[idx_in] * acc_kernel[(ky + radius) * kerDim + (kx + radius)];
-                }
-            }
+            int idx_out = (y * width + x) * channels + c;
+            acc_out[idx_out] = sum;
+        }
+    });
 
-            int idx_out = (y * width + x) * channels + c;
-            acc_out[idx_out] = sum;
-        }
-    });
+    });
+    q.wait();
 
-    });
-    q.wait();
-
-    host_accessor host_out(buf_out, read_only);
-    for (int i = 0; i < width * height * channels; i++) {
-        output[i] = host_out[i];
-    }
-    
     auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> elapsed = end - start;
+    std::chrono::duration<double> elapsed = end - start;
 
-    std::vector<unsigned char> out_img(width * height * channels);
-    for (int i = 0; i < width * height * channels; i++) {
-        float val = std::clamp(output[i], 0.f, 1.f);
-        out_img[i] = static_cast<unsigned char>(val * 255.f);
-    }
+    host_accessor host_out(buf_out, read_only);
+    for (int i = 0; i < width * height * channels; i++) {
+        output[i] = host_out[i];
+    }
+   
 
-    if (!stbi_write_png("images/output.png", width, height, channels, out_img.data(), width * channels)) {
-        throw std::runtime_error("Errore nel salvataggio dell'immagine.\n");
-        return 1;
-    }
+    std::vector<unsigned char> out_img(width * height * channels);
+    for (int i = 0; i < width * height * channels; i++) {
+        float val = std::clamp(output[i], 0.f, 1.f);
+        out_img[i] = static_cast<unsigned char>(val * 255.f);
+    }
 
-    std::cout << "Immagine salvata come output.png\n";
-    std::cout << "Tempo di puro calcolo: " << elapsed.count() << " secondi.\n";
-    
-    return 0;
+    if (!stbi_write_png("images/output.png", width, height, channels, out_img.data(), width * channels)) {
+        throw std::runtime_error("Errore nel salvataggio dell'immagine.\n");
+        return 1;
+    }
+
+    std::cout << "Immagine salvata come output.png\n";
+    std::cout << "Tempo di puro calcolo: " << elapsed.count() << " secondi.\n";
+    
+    return 0;
 }
